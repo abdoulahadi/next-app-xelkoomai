@@ -1,0 +1,241 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Enum for user roles
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+// User model for authentication and authorization
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  password      String
+  role          Role      @default(EDITOR)
+  image         String?
+  emailVerified DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  articles       Article[]
+  uploadedMedia  Media[]
+  auditLogs      AuditLog[]
+  articleVersions ArticleVersion[]
+
+  @@map("users")
+}
+
+// Article model for blog posts
+model Article {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  description String
+  content     String    // Stored as HTML from rich text editor
+  image       String
+  tags        String    // Stored as JSON array stringified
+  published   Boolean   @default(false)
+  featured    Boolean   @default(false)
+  readTime    String
+  views       Int       @default(0)
+
+  // Author relation
+  author      User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId    String
+
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  versions    ArticleVersion[]
+  comments    Comment[]
+
+  @@index([slug])
+  @@index([published])
+  @@index([authorId])
+  @@map("articles")
+}
+
+// Media model for uploaded images
+model Media {
+  id            String   @id @default(cuid())
+  filename      String
+  originalName  String
+  url           String   // Relative path from /public
+  mimeType      String
+  size          Int      // Size in bytes
+  width         Int?
+  height        Int?
+
+  // Uploader relation
+  uploadedBy    User     @relation(fields: [uploadedById], references: [id], onDelete: Cascade)
+  uploadedById  String
+
+  createdAt     DateTime @default(now())
+
+  @@index([uploadedById])
+  @@map("media")
+}
+
+// ArticleVersion model for version history
+model ArticleVersion {
+  id        String   @id @default(cuid())
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  content   String   // Snapshot of content at this version
+  title     String
+
+  createdBy User     @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdById String
+  createdAt DateTime @default(now())
+
+  @@index([articleId])
+  @@map("article_versions")
+}
+
+// Comment model for article comments
+model Comment {
+  id        String   @id @default(cuid())
+  articleId String
+  article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  author    String
+  email     String
+  content   String
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([articleId])
+  @@index([approved])
+  @@map("comments")
+}
+
+// AuditLog model for tracking admin actions
+model AuditLog {
+  id       String   @id @default(cuid())
+  action   String   // CREATE, UPDATE, DELETE
+  entity   String   // Article, User, Media
+  entityId String
+  changes  String?  // JSON string of changes
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([entity])
+  @@map("audit_logs")
+}
+
+// Analytics model for tracking views and stats
+model Analytics {
+  id        String   @id @default(cuid())
+  date      DateTime @unique
+  views     Int      @default(0)
+  visitors  Int      @default(0)
+  articles  String   // JSON object: { "slug": viewCount }
+  createdAt DateTime @default(now())
+
+  @@index([date])
+  @@map("analytics")
+}
+
+// Settings model for site configuration
+model Settings {
+  id                String   @id @default(cuid())
+
+  // Site Information
+  siteName          String   @default("Xelkoom-AI")
+  siteDescription   String   @default("Votre partenaire en solutions d'Intelligence Artificielle")
+  siteUrl           String   @default("https://xelkoomai.sn")
+  logoUrl           String?
+
+  // SEO
+  seoTitle          String?
+  seoDescription    String?
+  seoKeywords       String?  // JSON array stringified
+
+  // Social Media
+  twitterHandle     String?
+  facebookUrl       String?
+  linkedinUrl       String?
+  instagramUrl      String?
+
+  // Contact
+  contactEmail      String?
+  contactPhone      String?
+
+  // Newsletter
+  newsletterEnabled Boolean  @default(true)
+  newsletterProvider String?
+  newsletterApiKey  String?
+
+  // EmailJS Configuration
+  emailjsEnabled    Boolean  @default(false)
+  emailjsServiceId  String?
+  emailjsTemplateId String?
+  emailjsPublicKey  String?
+
+  // Appearance - Couleurs principales
+  primaryColor      String   @default("#0D7330")
+  secondaryColor    String   @default("#5B8B17")
+  accentColor       String   @default("#10b981")
+
+  // Couleurs de base
+  backgroundColor   String   @default("#ffffff")
+  foregroundColor   String   @default("#000000")
+  grayLightColor    String   @default("#F9FAFB")
+
+  // Couleurs sémantiques
+  successColor      String   @default("#10B981")
+  errorColor        String   @default("#EF4444")
+  warningColor      String   @default("#F59E0B")
+  infoColor         String   @default("#3B82F6")
+
+  // Couleurs de texte
+  textPrimaryColor    String @default("#000000")
+  textSecondaryColor  String @default("#6b7280")
+  textMutedColor      String @default("#9ca3af")
+
+  // Admin
+  adminSidebarColor String   @default("#0D7330")
+  adminAccentColor  String   @default("#5B8B17")
+
+  updatedAt         DateTime @updatedAt
+
+  @@map("settings")
+}
+
+// Realization model for use cases/portfolio
+model Realization {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  benefits    String    // JSON array stringified
+  image       String
+  link        String?   // URL to the live application
+  icon        String    @default("Sparkles") // Lucide icon name
+  published   Boolean   @default(true)
+  order       Int       @default(0) // For custom ordering
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([published])
+  @@index([order])
+  @@map("realizations")
+}

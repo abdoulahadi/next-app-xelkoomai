@@ -1,0 +1,50 @@
+name: Database Backup
+
+on:
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  backup:
+    name: Backup Database
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Create database backup
+        run: |
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+            cd /app/xelkoomai
+            docker-compose exec -T app sh -c "/scripts/backup-db.sh"
+          EOF
+
+      - name: Download backup to GitHub
+        run: |
+          mkdir -p ./backups
+          scp ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/app/xelkoomai/backups/database_*.db.gz ./backups/
+
+      - name: Upload backup artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: database-backup-${{ github.run_number }}
+          path: ./backups/*.db.gz
+          retention-days: 30
+
+      - name: Notify backup completion
+        if: always()
+        run: |
+          if [ ${{ job.status }} == 'success' ]; then
+            echo "Backup completed successfully"
+          else
+            echo "Backup failed!"
+          fi

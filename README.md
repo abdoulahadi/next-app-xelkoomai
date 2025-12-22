@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Xelkoom-AI - Site Vitrine
 
-## Getting Started
+Site vitrine moderne pour Xelkoom-AI, startup spécialisée en intelligence artificielle au Sénégal.
 
-First, run the development server:
+## 🚀 Technologies
+
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS 4
+- **UI Components**: Radix UI
+- **Animations**: Framer Motion
+- **Forms**: React Hook Form + Zod
+- **Icons**: Lucide React
+
+## 📦 Installation
 
 ```bash
+# Installer les dépendances
+npm install
+
+# Lancer le serveur de développement
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build pour la production
+npm run build
+
+# Démarrer en production
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000) pour voir le résultat.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🏗️ Structure du Projet
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/                    # Pages Next.js (App Router)
+│   ├── about/             # Page À propos
+│   ├── blog/              # Blog et articles
+│   ├── contact/           # Page Contact
+│   ├── services/          # Page Services
+│   └── api/               # API Routes
+├── components/
+│   ├── ui/                # Composants UI de base
+│   ├── layout/            # Header, Footer, Navigation
+│   ├── sections/          # Sections réutilisables
+│   └── common/            # Composants communs
+├── lib/                   # Utilitaires
+├── hooks/                 # Custom hooks
+├── types/                 # TypeScript types
+└── config/                # Configuration
+```
 
-## Learn More
+## 🎨 Design System
 
-To learn more about Next.js, take a look at the following resources:
+### Couleurs
+- Primary: Blue (#0070F3)
+- Secondary: Purple (#7928CA)
+- Accent: Pink (#FF0080)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Typographie
+- Font: Inter
+- Headings: Bold, 48-64px
+- Body: Regular, 16-18px
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📄 Pages
 
-## Deploy on Vercel
+- `/` - Page d'accueil
+- `/about` - À propos
+- `/services` - Services IA
+- `/contact` - Contact avec formulaire
+- `/blog` - Liste des articles
+- `/blog/[slug]` - Article individuel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎯 Fonctionnalités
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+✅ Design responsive
+✅ Mode sombre/clair (système)
+✅ Animations fluides
+✅ Formulaire de contact
+✅ Newsletter
+✅ Blog avec routing dynamique
+✅ SEO optimisé
+✅ Performance optimisée
+
+## 🚀 Déploiement
+
+Le moyen le plus simple de déployer est d'utiliser [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
+
+Consultez la [documentation de déploiement Next.js](https://nextjs.org/docs/app/building-your-application/deploying) pour plus de détails.
+
+## 📧 Contact
+
+Pour toute question : contact@xelkoomai.sn
+
+## 📄 License
+
+Propriété de Xelkoom-AI © 2025
