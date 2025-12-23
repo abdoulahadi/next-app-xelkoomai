@@ -157,13 +157,6 @@ export default function LoginPage() {
                 )}
               </Button>
             </form>
-
-            <div className="mt-6 text-center text-sm text-gray-500">
-              <p>Identifiants par défaut :</p>
-              <p className="font-mono text-xs mt-1">
-                admin@xelkoom-ai.com / Admin123!
-              </p>
-            </div>
           </CardContent>
         </Card>
       </motion.div>
