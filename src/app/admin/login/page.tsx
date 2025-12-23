@@ -53,7 +53,7 @@ export default function LoginPage() {
         router.push(callbackUrl)
         router.refresh()
       }
-    } catch (err) {
+    } catch {
       setError("Une erreur est survenue")
     } finally {
       setIsLoading(false)
@@ -83,7 +83,7 @@ export default function LoginPage() {
             </div>
             <CardTitle className="text-2xl font-bold">Administration</CardTitle>
             <CardDescription>
-              Connectez-vous pour accéder au panel d'administration
+              Connectez-vous pour accéder au panel d&apos;administration
             </CardDescription>
           </CardHeader>
           <CardContent>

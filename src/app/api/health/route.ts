@@ -25,7 +25,6 @@ interface HealthStatus {
 }
 
 export async function GET() {
-  const startTime = Date.now()
   const timestamp = new Date().toISOString()
 
   try {
@@ -42,7 +41,7 @@ export async function GET() {
       if (!fs.existsSync(uploadsPath)) {
         fs.mkdirSync(uploadsPath, { recursive: true })
       }
-    } catch (error) {
+    } catch {
       filesystemStatus = "down"
     }
 

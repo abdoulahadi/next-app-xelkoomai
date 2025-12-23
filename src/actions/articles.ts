@@ -1,7 +1,6 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { redirect } from "next/navigation"
 import prisma from "@/lib/prisma"
 import { requireAuth } from "@/lib/auth-utils"
 import { articleSchema } from "@/lib/validations/article"
@@ -230,7 +229,7 @@ export async function getPublishedArticles(
     const skip = (page - 1) * limit
 
     // Build where clause
-    const where: any = { published: true }
+    const where: Record<string, unknown> = { published: true }
 
     // Add search filter
     if (search) {

@@ -38,7 +38,7 @@ export default async function AuditLogsPage({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Journal d'Audit</h1>
+        <h1 className="text-3xl font-bold text-gray-900">Journal d&apos;Audit</h1>
         <p className="text-gray-500 mt-1">
           Historique complet des actions effectuées sur la plateforme
         </p>

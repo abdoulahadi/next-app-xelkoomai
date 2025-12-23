@@ -31,7 +31,7 @@ export default async function EditArticlePage({
             </Link>
           </Button>
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Éditer l'Article</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Éditer l&apos;Article</h1>
             <p className="text-gray-500 mt-1 truncate max-w-2xl">
               {article.title}
             </p>

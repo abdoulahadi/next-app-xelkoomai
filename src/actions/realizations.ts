@@ -156,7 +156,7 @@ export async function updateRealization(id: string, data: Partial<RealizationFor
 
     const validated = realizationSchema.partial().parse(data)
 
-    const updateData: any = {}
+    const updateData: Record<string, unknown> = {}
 
     if (validated.title !== undefined) updateData.title = validated.title
     if (validated.description !== undefined) updateData.description = validated.description

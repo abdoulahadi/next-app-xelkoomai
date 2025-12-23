@@ -1,7 +1,7 @@
 "use server"
 
 import { prisma } from "@/lib/prisma"
-import { requireAuth, requireRole } from "@/lib/auth-utils"
+import { requireRole } from "@/lib/auth-utils"
 import { revalidatePath } from "next/cache"
 import { hashPassword, generateRandomPassword } from "@/lib/password"
 import { z } from "zod"

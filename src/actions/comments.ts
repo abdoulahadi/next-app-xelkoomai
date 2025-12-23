@@ -17,7 +17,7 @@ export async function createComment(articleId: string, author: string, email: st
       return { success: false, error: "Email invalide" }
     }
 
-    const comment = await prisma.comment.create({
+    await prisma.comment.create({
       data: {
         articleId,
         author,

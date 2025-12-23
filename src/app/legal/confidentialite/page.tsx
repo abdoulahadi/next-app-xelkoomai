@@ -1,6 +1,5 @@
 "use client"
 
-import { Metadata } from "next"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import { Scale, Shield, FileText, Cookie, ArrowLeft } from "lucide-react"

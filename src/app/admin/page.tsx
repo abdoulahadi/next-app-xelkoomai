@@ -19,7 +19,7 @@ export default async function AdminDashboard() {
       <div>
         <h1 className="text-3xl font-bold text-gray-900">Dashboard Analytics</h1>
         <p className="text-gray-500 mt-1">
-          Vue d'ensemble complète de votre plateforme
+          Vue d&apos;ensemble complète de votre plateforme
         </p>
       </div>
 

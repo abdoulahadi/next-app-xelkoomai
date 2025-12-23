@@ -8,7 +8,7 @@ import { join } from "path"
 
 export async function getAllMedia() {
   try {
-    const session = await requireAuth()
+    await requireAuth()
 
     const media = await prisma.media.findMany({
       include: {
