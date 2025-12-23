@@ -79,6 +79,7 @@ export default async function RootLayout({
     <html
       lang="fr"
       className="scroll-smooth"
+      suppressHydrationWarning
       style={{
         // @ts-ignore
         '--primary': settings.primaryColor,
